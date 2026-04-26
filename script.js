@@ -57,4 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
             partnershipForm.reset();
         });
     }
+
+    // 5. Mobile Hamburger Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinksList = document.querySelector('.nav-links');
+    
+    if (hamburger && navLinksList) {
+        hamburger.addEventListener('click', () => {
+            navLinksList.classList.toggle('active');
+        });
+    }
 });
