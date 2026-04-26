@@ -3,188 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonepur | Regional Archive</title>
-    <style>
-        :root {
-            --bg: #FDFBF7; /* Cream/Old Paper */
-            --primary: #9B2C2C; /* Traditional Terracotta/Deep Red */
-            --accent: #B8860B; /* Dark Gold */
-            --text: #2D2D2D;
-            --border: rgba(155, 44, 44, 0.15);
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Georgia', serif; /* Classic Serif for traditional feel */
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        /* Traditional Header with Border */
-        .hero {
-            height: 70vh;
-            position: relative;
-            background: linear-gradient(rgba(253, 251, 247, 0.4), rgba(253, 251, 247, 0.8)), 
-                        url('images/main-bg.jpg'); /* REPLACE WITH YOUR BIG PHOTO */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-bottom: 3px double var(--primary);
-            margin-bottom: 60px;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 12vw, 7rem);
-            font-weight: 400;
-            color: var(--primary);
-            margin: 0;
-            font-family: 'Times New Roman', serif;
-            letter-spacing: 2px;
-        }
-
-        .hero p {
-            color: var(--accent);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            margin-top: -10px;
-        }
-
-        /* Traditional Layout */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto 100px;
-            padding: 0 20px;
-        }
-
-        /* Main Blog Section */
-        .main-article {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 40px;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 60px;
-            margin-bottom: 60px;
-        }
-
-        .blog-text h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-top: 0;
-        }
-
-        .featured-image {
-            width: 100%;
-            border: 8px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            filter: sepia(0.2) contrast(1.1); /* Adds the traditional 90s editorial warmth */
-        }
-
-        /* Small Photo Gallery Underneath */
-        .gallery-title {
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            font-size: 0.8rem;
-            margin-bottom: 30px;
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .photo-card {
-            background: white;
-            padding: 10px;
-            border: 1px solid var(--border);
-            transition: 0.3s;
-        }
-
-        .photo-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            filter: grayscale(0.5); /* Semi-90s look */
-        }
-
-        .photo-card:hover {
-            transform: scale(1.02);
-            border-color: var(--primary);
-        }
-
-        .photo-card img:hover {
-            filter: grayscale(0);
-        }
-
-        /* Business Section */
-        .inquiry-box {
-            margin-top: 80px;
-            background: var(--primary);
-            color: white;
-            padding: 50px;
-            text-align: center;
-            border-radius: 2px;
-        }
-
-        .inquiry-box h3 { font-size: 2rem; margin-top: 0; }
-        .inquiry-box p { color: rgba(255,255,255,0.8); }
-
-        @media (max-width: 768px) {
-            .main-article { grid-template-columns: 1fr; }
-            .photo-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <title>Sonepur Heritage | The Glorious Confluence</title>
+    <meta name="description" content="Discover the greatness of Sonepur, its historic Sonepur Mela, majestic Harihar Nath Mandir, and upcoming business and investment opportunities.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <section class="hero">
-        <p>A Regional Development Archive</p>
-        <h1>SONPUR</h1>
-    </section>
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="logo">SONEPUR</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#heritage">Heritage</a></li>
+                <li><a href="#mela">Sonepur Mela</a></li>
+                <li><a href="#temple">Harihar Nath</a></li>
+                <li><a href="#invest" class="btn-primary">Invest & Partner</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
 
-    <main class="container">
-        <article class="main-article">
-            <div class="blog-text">
-                <h2>The Spirit of Sonepur</h2>
-                <p>Welcome to a digital preservation of the Sonepur region. From the legendary Sonepur Mela—one of the largest traditional fairs in Asia—to the modern evolution of regional transport and the future airport project.</p>
-                <p>Our archive uses high-contrast editorial photography to bridge the gap between our rich history and our industrial future.</p>
-            </div>
-            <div class="blog-image">
-                <img src="images/mela-main.jpg" alt="Sonepur Mela" class="featured-image">
-            </div>
-        </article>
-
-        <div class="gallery-title">Field Documentation</div>
-        <div class="photo-grid">
-            <div class="photo-card">
-                <img src="images/site-1.jpg" alt="Site 1">
-                <p style="font-size: 0.8rem; margin-top:10px;">// Site Observation 01</p>
-            </div>
-            <div class="photo-card">
-                <img src="images/site-2.jpg" alt="Site 2">
-                <p style="font-size: 0.8rem; margin-top:10px;">// Regional Hub</p>
-            </div>
-            <div class="photo-card">
-                <img src="images/site-3.jpg" alt="Site 3">
-                <p style="font-size: 0.8rem; margin-top:10px;">// Traditional Fair</p>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content reveal">
+            <h1>The Eternal Heritage of <span class="highlight">Sonepur</span></h1>
+            <p>Where history meets the future. Experience the greatness of Saran District's most iconic city, home to the legendary Sonepur Mela and the sacred Harihar Nath Mandir.</p>
+            <div class="hero-actions">
+                <a href="#heritage" class="btn-primary">Explore Heritage</a>
+                <a href="#invest" class="btn-secondary">Partnership Vision</a>
             </div>
         </div>
+    </section>
 
-        <section class="inquiry-box">
-            <h3>Strategic Land Development</h3>
-            <p>Direct inquiries for logistics, warehousing, and regional investments in the Sonepur sector.</p>
-            <p style="font-family: monospace; letter-spacing: 1px; margin-top: 20px;">CONTACT@SONEPURAIRPORT.IN</p>
-        </section>
-    </main>
+    <!-- Heritage & Greatness Section -->
+    <section class="section heritage" id="heritage">
+        <div class="container reveal">
+            <h2 class="section-title">The Glory of Sonepur</h2>
+            <div class="heritage-grid">
+                <div class="heritage-text">
+                    <p>Situated at the confluence of the sacred rivers Ganges and Gandak, Sonepur is a city steeped in profound spiritual and historical significance. It is not merely a geographic location; it is the heartbeat of Bihar's rich cultural tapestry.</p>
+                    <p>For centuries, it has been a beacon of trade, spirituality, and unity. Today, Sonepur stands on the cusp of a modern renaissance, blending its timeless legacy with futuristic growth.</p>
+                </div>
+                <div class="heritage-stats">
+                    <div class="stat-box">
+                        <h3>2,000+</h3>
+                        <p>Years of History</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Largest</h3>
+                        <p>Cattle Fair in Asia</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Sacred</h3>
+                        <p>Confluence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Sonepur Mela Section -->
+    <section class="section mela" id="mela">
+        <div class="container mela-container">
+            <div class="image-wrapper reveal-left">
+                <img src="assets/images/sonepur_mela_1777197547469.png" alt="Vibrant Sonepur Mela">
+            </div>
+            <div class="text-wrapper reveal-right">
+                <h2 class="section-title">The Great Sonepur Mela</h2>
+                <p>Witness the spectacle of Asia's largest cattle fair. The Sonepur Mela is a breathtaking display of commerce and culture, dating back to ancient times when Emperor Chandragupta Maurya used it to buy elephants and horses across the river Ganges.</p>
+                <p>From decorated elephants to vibrant folk performances, the Mela is a living museum of Indian tradition that attracts millions of visitors from across the globe every year in November-December.</p>
+                <a href="#" class="btn-text">Discover More <span>&rarr;</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Harihar Nath Mandir Section -->
+    <section class="section temple" id="temple">
+        <div class="container temple-container">
+            <div class="text-wrapper reveal-left">
+                <h2 class="section-title">Harihar Nath Mandir</h2>
+                <p>At the heart of Sonepur lies the magnificent Harihar Nath Mandir, uniquely dedicated to the divine union of Lord Vishnu (Hari) and Lord Shiva (Har). According to legend, the temple was originally built by Lord Rama on his way to King Janaka's court.</p>
+                <p>The temple is the epicenter of spiritual energy, where devotees gather to bathe at the sacred confluence on Kartik Purnima before seeking blessings. The architectural beauty and spiritual aura make it a monumental heritage site.</p>
+            </div>
+            <div class="image-wrapper reveal-right">
+                <div class="glass-card">
+                    <img src="assets/images/harihar_nath_1777197563968.png" alt="Harihar Nath Mandir">
+                    <div class="card-caption">
+                        <h3>Spiritual Epicenter</h3>
+                        <p>Sacred vibrations echoing through time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment & Partnership Section -->
+    <section class="section invest" id="invest">
+        <div class="container">
+            <div class="invest-header reveal">
+                <h2 class="section-title">A Vision for Tomorrow</h2>
+                <p>Partner with us as Sonepur transforms into a modern hub.</p>
+            </div>
+            
+            <div class="invest-grid">
+                <div class="invest-content reveal-left">
+                    <h3>The Next Big Opportunity</h3>
+                    <p>Sonepur is not just a city of the past; it is the city of the future. With new infrastructural developments, including an <strong>upcoming airport</strong> in the vicinity, the Saran district is poised for unprecedented growth.</p>
+                    <p>We are inviting early investors, visionary partners, and businesses to join us in building the new Sonepur. Whether in tourism, hospitality, or urban development, the potential is limitless.</p>
+                    
+                    <div class="contact-box">
+                        <h4>Partner With Us</h4>
+                        <form class="contact-form" id="partnership-form">
+                            <input type="text" placeholder="Your Name" required>
+                            <input type="email" placeholder="Email Address" required>
+                            <textarea placeholder="Tell us about your business vision..." required></textarea>
+                            <button type="submit" class="btn-primary">Send Proposal</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="invest-visual reveal-right">
+                    <div class="image-wrapper glow-effect">
+                        <img src="assets/images/airport_investment_1777197579291.png" alt="Upcoming Airport and Infrastructure">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h2>SONEPUR</h2>
+                <p>Bridging ancient heritage with futuristic horizons in the heart of Saran.</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-group">
+                    <h4>Explore</h4>
+                    <a href="#heritage">Heritage</a>
+                    <a href="#mela">Sonepur Mela</a>
+                    <a href="#temple">Harihar Nath</a>
+                </div>
+                <div class="link-group">
+                    <h4>Opportunities</h4>
+                    <a href="#invest">Invest</a>
+                    <a href="#invest">Partner</a>
+                    <a href="#invest">Contact</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sonepur Heritage & Development. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
