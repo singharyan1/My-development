@@ -3,31 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regional Development Blog</title>
+    <title>Sonepur | Regional Archive</title>
     <style>
-        body { 
-            font-family: 'Helvetica', sans-serif; 
-            background-color: #000; 
-            color: #fff; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+        :root {
+            --bg: #FDFBF7; /* Cream/Old Paper */
+            --primary: #9B2C2C; /* Traditional Terracotta/Deep Red */
+            --accent: #B8860B; /* Dark Gold */
+            --text: #2D2D2D;
+            --border: rgba(155, 44, 44, 0.15);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Georgia', serif; /* Classic Serif for traditional feel */
             margin: 0;
+            line-height: 1.6;
         }
-        .box { 
-            border: 2px solid #333; 
-            padding: 40px; 
+
+        /* Traditional Header with Border */
+        .hero {
+            height: 70vh;
+            position: relative;
+            background: linear-gradient(rgba(253, 251, 247, 0.4), rgba(253, 251, 247, 0.8)), 
+                        url('images/main-bg.jpg'); /* REPLACE WITH YOUR BIG PHOTO */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            border-bottom: 3px double var(--primary);
+            margin-bottom: 60px;
         }
-        h1 { letter-spacing: 5px; text-transform: uppercase; }
-        p { color: #888; }
+
+        .hero h1 {
+            font-size: clamp(3rem, 12vw, 7rem);
+            font-weight: 400;
+            color: var(--primary);
+            margin: 0;
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            color: var(--accent);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-top: -10px;
+        }
+
+        /* Traditional Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        /* Main Blog Section */
+        .main-article {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 60px;
+            margin-bottom: 60px;
+        }
+
+        .blog-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .featured-image {
+            width: 100%;
+            border: 8px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            filter: sepia(0.2) contrast(1.1); /* Adds the traditional 90s editorial warmth */
+        }
+
+        /* Small Photo Gallery Underneath */
+        .gallery-title {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            font-size: 0.8rem;
+            margin-bottom: 30px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: white;
+            padding: 10px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            filter: grayscale(0.5); /* Semi-90s look */
+        }
+
+        .photo-card:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+
+        .photo-card img:hover {
+            filter: grayscale(0);
+        }
+
+        /* Business Section */
+        .inquiry-box {
+            margin-top: 80px;
+            background: var(--primary);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .inquiry-box h3 { font-size: 2rem; margin-top: 0; }
+        .inquiry-box p { color: rgba(255,255,255,0.8); }
+
+        @media (max-width: 768px) {
+            .main-article { grid-template-columns: 1fr; }
+            .photo-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>Under Construction</h1>
-        <p>Regional Development & Editorial Photography</p>
-    </div>
+
+    <section class="hero">
+        <p>A Regional Development Archive</p>
+        <h1>SONPUR</h1>
+    </section>
+
+    <main class="container">
+        <article class="main-article">
+            <div class="blog-text">
+                <h2>The Spirit of Sonepur</h2>
+                <p>Welcome to a digital preservation of the Sonepur region. From the legendary Sonepur Mela—one of the largest traditional fairs in Asia—to the modern evolution of regional transport and the future airport project.</p>
+                <p>Our archive uses high-contrast editorial photography to bridge the gap between our rich history and our industrial future.</p>
+            </div>
+            <div class="blog-image">
+                <img src="images/mela-main.jpg" alt="Sonepur Mela" class="featured-image">
+            </div>
+        </article>
+
+        <div class="gallery-title">Field Documentation</div>
+        <div class="photo-grid">
+            <div class="photo-card">
+                <img src="images/site-1.jpg" alt="Site 1">
+                <p style="font-size: 0.8rem; margin-top:10px;">// Site Observation 01</p>
+            </div>
+            <div class="photo-card">
+                <img src="images/site-2.jpg" alt="Site 2">
+                <p style="font-size: 0.8rem; margin-top:10px;">// Regional Hub</p>
+            </div>
+            <div class="photo-card">
+                <img src="images/site-3.jpg" alt="Site 3">
+                <p style="font-size: 0.8rem; margin-top:10px;">// Traditional Fair</p>
+            </div>
+        </div>
+
+        <section class="inquiry-box">
+            <h3>Strategic Land Development</h3>
+            <p>Direct inquiries for logistics, warehousing, and regional investments in the Sonepur sector.</p>
+            <p style="font-family: monospace; letter-spacing: 1px; margin-top: 20px;">CONTACT@SONEPURAIRPORT.IN</p>
+        </section>
+    </main>
+
 </body>
 </html>
