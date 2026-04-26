@@ -1,14 +1,62 @@
-// Function to add a notice for users about private nature
-window.onload = function() {
-    console.log("Portal Active: Private Regional Archive - Sonepur");
-};
+:root {
+    --primary-red: #9B2C2C;
+    --paper-bg: #FDFBF7;
+    --text-dark: #222;
+}
 
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+body {
+    background-color: var(--paper-bg);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Legal Bar Style */
+.legal-disclaimer {
+    background: #333;
+    color: #ffd700;
+    font-size: 0.8rem;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 8%;
+    background: white;
+    border-bottom: 3px solid var(--primary-red);
+    position: sticky; top: 0; z-index: 100;
+}
+
+.logo { font-size: 1.5rem; font-weight: 800; color: #000; }
+.logo span { color: var(--primary-red); }
+
+.nav-links a { text-decoration: none; color: #333; margin-left: 20px; font-weight: 600; }
+
+/* Content Cards */
+.container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+.wiki-card { background: white; border: 1px solid #e0e0e0; padding: 30px; margin-bottom: 40px; }
+.wiki-header { font-size: 2rem; border-bottom: 2px solid #333; margin-bottom: 20px; font-weight: bold; }
+.main-img { width: 100%; border-radius: 4px; margin-bottom: 20px; }
+
+/* Table Style */
+.info-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.info-table th, .info-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+.info-table th { background: #f5f5f5; width: 30%; }
+
+/* News Feed Post */
+.post-card { background: white; border-radius: 8px; border: 1px solid #ddd; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.tag { background: var(--primary-red); color: white; padding: 4px 10px; font-size: 0.7rem; border-radius: 20px; }
+.read-more { color: var(--primary-red); font-weight: bold; text-decoration: none; }
+
+/* Form Container */
+.form-section { background: #eee; padding: 40px 0; border-radius: 10px; }
+.form-container { max-width: 600px; margin: 0 auto; text-align: center; }
+.iframe-container { border: 2px solid #ccc; background: white; border-radius: 8px; overflow: hidden; margin-top: 20px; }
+
+.footer { text-align: center; padding: 50px; border-top: 1px solid #ddd; margin-top: 60px; }
