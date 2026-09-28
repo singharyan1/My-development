@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Sonepur</title>
+    <meta name="description" content="All the important news about the proposed Sonepur airport project.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">SONEPUR</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="business.html">Business</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li>
+                <li><a href="poll.html" >Poll</a></li>
+                <li><a href="news.html" class="active">News</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="updates.html" class="btn-primary">Latest Updates</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <section class="page-header">
+        <h1 class="section-title">Project News</h1>
+        <p>Important news about the Sonepur airport project, with links to the original reports.</p>
+    </section>
+    <section class="container page-content" style="align-items: flex-start;">
+        <div class="updates-grid" id="news-list"><p>Loading news…</p></div>
+    </section>
+    <footer><div class="container footer-content"><div class="footer-brand"><h2>SONEPUR</h2></div></div></footer>
+    <script src="script.js"></script>
+    <script>
+    fetch('news.json').then(function (r) { return r.json(); }).then(function (items) {
+        var box = document.getElementById('news-list');
+        box.innerHTML = '';
+        items.forEach(function (n) {
+            var c = document.createElement('div'); c.className = 'update-card';
+            if (n.image) { var m = document.createElement('div'); m.className = 'update-media'; var i = document.createElement('img'); i.src = n.image; i.alt = n.title; m.appendChild(i); c.appendChild(m); }
+            var d = document.createElement('span'); d.className = 'update-date';
+            d.textContent = new Date(n.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+            var b = document.createElement('div'); b.className = 'update-content';
+            var t = document.createElement('h3'); t.textContent = n.title;
+            var p = document.createElement('p'); p.textContent = n.summary;
+            var a = document.createElement('a'); a.href = n.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+            a.className = 'btn-primary'; a.style.cssText = 'display:inline-block;padding:.4rem 1rem;font-size:.8rem;margin-top:1rem'; a.textContent = 'Read at ' + n.source;
+            b.append(t, p, a); c.append(d, b); box.appendChild(c);
+        });
+    }).catch(function () { document.getElementById('news-list').textContent = 'News could not be loaded. Please refresh.'; });
+    </script>
+</body>
+</html>
