@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Poll | Sonepur</title>
+    <meta name="description" content="Unofficial public opinion poll: should the proposed Sonepur airport be built at Hardiya Chawar? Vote once with your Google account and watch the live results.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">SONEPUR</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="business.html">Business</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li>
+                <li><a href="poll.html" class="active">Poll</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="updates.html" class="btn-primary">Latest Updates</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <section class="page-header">
+        <h1 class="section-title">Public Poll</h1>
+        <p>An unofficial opinion poll. One Google account, one vote.</p>
+    </section>
+
+    <section class="poll-section">
+        <div class="poll-wrap">
+            <div class="poll-card">
+                <h2 class="poll-question">Should the proposed Sonepur airport be built at Hardiya Chawar?<br><span class="hi">क्या प्रस्तावित सोनपुर हवाई अड्डा हरदिया चावर में बनाया जाना चाहिए?</span></h2>
+                <p class="poll-note">Fill in the form in English or हिन्दी, whichever you prefer. / फ़ॉर्म अंग्रेज़ी या हिन्दी, किसी भी भाषा में भरें।</p>
+                <form id="vote-form" onsubmit="return false;">
+                    <fieldset class="poll-options">
+                        <legend class="visually-hidden">Your answer / आपका उत्तर</legend>
+                        <div class="poll-option"><input type="radio" name="choice" id="choice-yes" value="yes" required><label for="choice-yes">Yes / हाँ</label></div>
+                        <div class="poll-option"><input type="radio" name="choice" id="choice-no" value="no"><label for="choice-no">No / नहीं</label></div>
+                    </fieldset>
+                    <div class="poll-fields">
+                        <label>Full name / पूरा नाम<input type="text" id="f-name" maxlength="100" autocomplete="name" required></label>
+                        <label>Mobile number / मोबाइल नंबर<input type="tel" id="f-phone" inputmode="numeric" maxlength="14" autocomplete="tel" placeholder="10-digit / 10 अंक" required></label>
+                        <label class="wide">Address / पता<textarea id="f-address" rows="2" maxlength="300" autocomplete="street-address" required></textarea></label>
+                        <label class="wide">Occupation / पेशा<input type="text" id="f-occupation" maxlength="100" required></label>
+                        <label class="wide consent"><input type="checkbox" id="f-consent" required> I agree that my details may be stored to run this poll, and that they will not be shown publicly. / मैं सहमत हूँ कि इस पोल के लिए मेरी जानकारी सुरक्षित रखी जाए और सार्वजनिक रूप से नहीं दिखाई जाएगी।</label>
+                    </div>
+                    <p class="poll-note" id="signin-hint">Complete every field to unlock voting. / वोट करने के लिए सभी जानकारी भरें।</p>
+                    <div id="signin" class="poll-signin" hidden><div id="gsi-button"></div><div id="turnstile"></div></div>
+                </form>
+                <p id="poll-status" class="poll-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="poll-card poll-results" aria-labelledby="results-title">
+                <h2 id="results-title" class="poll-results-title">Live results / लाइव परिणाम <span class="live-dot">Live / लाइव</span></h2>
+                <div class="vchart">
+                    <div class="vcol"><div class="vval"><b id="pct-yes">0%</b><span><span id="count-yes">0</span> votes / वोट</span></div><div class="vtrack"><div class="vfill yes" id="bar-yes"></div></div><div class="vlabel">Yes / हाँ</div></div>
+                    <div class="vcol"><div class="vval"><b id="pct-no">0%</b><span><span id="count-no">0</span> votes / वोट</span></div><div class="vtrack"><div class="vfill no" id="bar-no"></div></div><div class="vlabel">No / नहीं</div></div>
+                </div>
+                <p class="result-total"><strong id="count-total">0</strong> total votes / कुल वोट. <span id="updated"></span></p>
+            </div>
+
+            <div class="poll-fineprint">
+                <p><strong>About this poll / इस पोल के बारे में.</strong> This is an unofficial public opinion poll, not a government referendum, and the result is not binding. One person may hold more than one Google account, so the count may not be exact. / यह एक अनौपचारिक जनमत सर्वेक्षण है, सरकारी जनमत-संग्रह नहीं; इसका परिणाम बाध्यकारी नहीं है। एक व्यक्ति के एक से अधिक Google खाते हो सकते हैं, इसलिए गिनती सटीक नहीं हो सकती।</p>
+                <p><strong>Privacy / गोपनीयता.</strong> Your details are never shown publicly; only vote totals are. Google sign-in is used only to allow one vote per person. / आपकी जानकारी कभी सार्वजनिक नहीं होती; केवल कुल वोट दिखाए जाते हैं। Google साइन-इन केवल एक व्यक्ति एक वोट के लिए है।</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand"><h2>SONEPUR</h2></div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="poll.js"></script>
+</body>
+</html>
