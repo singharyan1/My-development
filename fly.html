@@ -7,22 +7,26 @@
 <meta name="description" content="Watch a plane take off from the proposed Sonepur airport, see possible connections across the globe, then fly it yourself.">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
-html,body{margin:0;height:100%;overflow:hidden;background:#0b1220;font-family:'Lato',sans-serif;color:#fff}
+:root{--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px)}
+html,body{margin:0;height:100%;overflow:hidden;background:#0b1220;font-family:'Lato',sans-serif;color:#fff;-webkit-text-size-adjust:100%}
 canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
 #c{z-index:1}#cg{z-index:0}#fade{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;transition:opacity .7s}
-.top{position:fixed;top:0;left:0;right:0;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.top a{color:#fff;text-decoration:none;font-weight:700;pointer-events:auto;text-shadow:0 1px 6px #000}
-#title{font-family:'Cinzel',serif;letter-spacing:.2em;text-shadow:0 2px 10px #000;transition:opacity 1s}
-#caption{position:fixed;top:56px;left:0;right:0;text-align:center;font-size:.9rem;text-shadow:0 1px 6px #000;padding:0 14px}
-#btns{position:fixed;bottom:22px;left:0;right:0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-#btns button,.pad button{font:700 1rem 'Lato',sans-serif;border:0;border-radius:8px;padding:.7rem 1.2rem;background:#c2410c;color:#fff;cursor:pointer}
+.top{position:fixed;top:0;left:0;right:0;padding:calc(10px + var(--sat)) calc(12px + var(--sar)) 8px calc(12px + var(--sal));display:flex;justify-content:space-between;align-items:center;pointer-events:none;gap:8px}
+.top a{color:#fff;text-decoration:none;font-weight:700;pointer-events:auto;text-shadow:0 1px 6px #000;font-size:.85rem;white-space:nowrap;flex:0 0 auto}
+#title{font-family:'Cinzel',serif;letter-spacing:.14em;text-shadow:0 2px 10px #000;transition:opacity 1s;font-size:.8rem;text-align:center;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#caption{position:fixed;top:calc(44px + var(--sat));left:calc(8px + var(--sal));right:calc(8px + var(--sar));text-align:center;font-size:.78rem;line-height:1.35;text-shadow:0 1px 6px #000;pointer-events:none}
+#btns{position:fixed;bottom:calc(10px + var(--sab));left:calc(8px + var(--sal));right:calc(8px + var(--sar));display:flex;gap:8px;justify-content:center;flex-wrap:wrap;z-index:5}
+#btns button,.pad button{font:700 .85rem 'Lato',sans-serif;border:0;border-radius:8px;padding:.6rem 1rem;background:#c2410c;color:#fff;cursor:pointer;white-space:nowrap}
 #btns button.alt{background:rgba(255,255,255,.2);backdrop-filter:blur(6px)}
-#hud{position:fixed;left:16px;bottom:22px;font-size:.9rem;line-height:1.5;text-shadow:0 1px 6px #000;display:none}
-#card{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.72);padding:1.4rem 1.8rem;border-radius:12px;text-align:center;display:none;max-width:80vw}
-.pad{position:fixed;bottom:20px;display:none;gap:8px;user-select:none;-webkit-user-select:none}
-.pad button{background:rgba(255,255,255,.25);width:56px;height:56px;padding:0;font-size:1.3rem;touch-action:none}
-#padL{left:14px}#padR{right:14px}
-@media (min-width:900px){.pad{display:none!important}}
+#hud{position:fixed;left:calc(10px + var(--sal));top:calc(44px + var(--sat));font-size:.72rem;line-height:1.45;text-shadow:0 1px 6px #000;display:none;background:rgba(0,0,0,.32);padding:6px 10px;border-radius:8px;max-width:46vw}
+#card{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.8);padding:1.1rem 1.3rem;border-radius:12px;text-align:center;display:none;max-width:min(80vw,360px);font-size:.9rem;z-index:6}
+#card h2{font-size:1.05rem;margin:0 0 .4rem}
+.pad{position:fixed;bottom:calc(10px + var(--sab));display:none;gap:6px;user-select:none;-webkit-user-select:none;z-index:5}
+.pad button{background:rgba(255,255,255,.28);width:46px;height:46px;padding:0;font-size:1.05rem;touch-action:none;flex:0 0 auto}
+#padL{left:calc(8px + var(--sal))}
+#padR{right:calc(8px + var(--sar));flex-wrap:wrap;max-width:104px;justify-content:flex-end}
+@media (min-width:900px){.pad{display:none!important}#btns{bottom:24px}}
+@media (max-width:400px){#title{display:none}.top a{font-size:.8rem}.pad button{width:42px;height:42px;font-size:.95rem}}
 </style>
 </head>
 <body>
@@ -189,6 +193,7 @@ var plane=buildPlane();plane.scale.setScalar(.22);sceneG.add(plane);plane.visibl
 var auto=false,key={},pp=new THREE.Vector3(),ff=new THREE.Vector3(),alt=4,spd=6,pit=0,bank=0,near=null,landed=false;
 window.addEventListener('keydown',function(e){var m={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right',ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',r:'fast',R:'fast',f:'slow',F:'slow',l:'land',L:'land'}[e.key];if(m){key[m]=true;e.preventDefault()}});
 window.addEventListener('keyup',function(e){var m={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right',ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',r:'fast',R:'fast',f:'slow',F:'slow',l:'land',L:'land'}[e.key];if(m)key[m]=false});
+function padsOn(on){document.querySelectorAll('.pad').forEach(function(p){p.style.display=on?'flex':'none'});$('btns').style.bottom=(on&&innerWidth<900)?'calc(76px + env(safe-area-inset-bottom,0px))':'';}
 document.querySelectorAll('.pad button').forEach(function(b){var k=b.dataset.k;b.addEventListener('pointerdown',function(e){key[k]=true;e.preventDefault()});['pointerup','pointerleave','pointercancel'].forEach(function(n){b.addEventListener(n,function(){key[k]=false})})});
 function startFlight(atAirport){
 state='fly';landed=false;$('card').style.display='none';plane.visible=true;$('title').style.opacity=0;
@@ -196,9 +201,9 @@ $('caption').textContent='\u2190 \u2192 steer \u00B7 \u2191 \u2193 climb / desce
 auto=false;alt=atAirport?1.4:4;spd=atAirport?3.5:4;pit=0;
 pp.copy(atAirport||AP[0].v).normalize().multiplyScalar(R+alt);
 var up=pp.clone().normalize(),n=new THREE.Vector3(0,1,0);ff.copy(n).addScaledVector(up,-n.dot(up)).normalize();
-$('hud').style.display='block';document.querySelectorAll('.pad').forEach(function(p){p.style.display='flex'});
+$('hud').style.display='block';padsOn(true);
 btns([['Exit to globe',function(){stopFlight()},1]])}
-function stopFlight(){plane.visible=false;$('hud').style.display='none';$('card').style.display='none';document.querySelectorAll('.pad').forEach(function(p){p.style.display='none'});state='globe';tG=6;showGlobeUI()}
+function stopFlight(){plane.visible=false;$('hud').style.display='none';$('card').style.display='none';padsOn(false);state='globe';tG=6;showGlobeUI()}
 function stepFly(dt){
 if(landed)return;
 var up=pp.clone().normalize(),turn=(key.left?1:0)-(key.right?1:0),pt=(key.up?.3:0)-(key.down?.3:0);if(key.land){auto=!auto;key.land=false}if(auto&&(turn||pt))auto=false;
@@ -216,7 +221,7 @@ var r=new THREE.Vector3().crossVectors(ff,up),m=new THREE.Matrix4().makeBasis(r,
 plane.quaternion.setFromRotationMatrix(m).multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(pit,0,bank)));plane.position.copy(pp);
 var tp=pp.clone().addScaledVector(ff,-3.4).addScaledVector(up,1.3);camG.position.lerp(tp,1-Math.pow(.001,dt));camG.up.copy(up);camG.lookAt(pp.clone().addScaledVector(ff,3));
 $('hud').innerHTML='Altitude: '+Math.round(alt*63.7)+' km (scaled)<br>Speed: '+spd.toFixed(1)+'<br>Nearest airport: '+nearest[0]+' ('+Math.round(nd*63.7)+' km)'+(auto?'<br>AUTO-LAND':'')}
-function land(a){landed=true;plane.position.copy(a.v).multiplyScalar(R+.35);var c=$('card');
+function land(a){landed=true;padsOn(false);plane.position.copy(a.v).multiplyScalar(R+.35);var c=$('card');
 c.innerHTML='<h2 style="font-family:Cinzel,serif;margin:0 0 .4rem">Landed at '+(a[0]==='Sonepur'?'Sonepur Airport':a[0])+'</h2><p style="margin:0">'+(a[0]==='Sonepur'?'Welcome home. This airport is proposed and not yet built.':'Smooth landing! Take off again or return to the globe.')+'</p>';c.style.display='block';
 btns([['Take off again',function(){startFlight(a.v)}],['Exit to globe',function(){stopFlight()},1]])}
 
