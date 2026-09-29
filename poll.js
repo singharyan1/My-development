@@ -156,7 +156,11 @@
             .then(function (res) {
                 if (res.ok) {
                     lockForm();
-                    try { localStorage.setItem(VOTED_KEY, '1'); } catch (e) { /* ignore */ }
+                    try {
+                        localStorage.setItem(VOTED_KEY, '1');
+                        var first = (val('f-name') || '').trim().split(/\s+/)[0];
+                        if (first) localStorage.setItem('sonepur_pilot_name', first.slice(0, 24));
+                    } catch (e) { /* ignore */ }
                     setStatus('Your vote has been recorded. Thank you.', 'ok');
                     loadResults();
                 } else if (res.status === 409) {

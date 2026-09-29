@@ -230,7 +230,16 @@ var state='takeoff',last=performance.now(),tR=0,uiShown=false,cA=$('c');
 function btns(list){var b=$('btns');b.innerHTML='';list.forEach(function(x){var e=document.createElement('button');e.textContent=x[0];if(x[2])e.className='alt';e.onclick=x[1];b.appendChild(e)})}
 function showGlobeUI(){uiShown=true;$('caption').textContent='';$('title').style.opacity=1;btns([['\u25B6 Take control',function(){startFlight()}],['\u21BA Replay takeoff',function(){go()},1]])}
 function toGlobe(){state='rise';tR=0;tG=0;btns([['Skip',function(){tR=9;tG=9},1]])}
-function go(){$('hud').style.display='none';$('card').style.display='none';plane.visible=false;cA.style.display='';cA.style.opacity=1;uiShown=false;resetA();state='takeoff';$('title').style.opacity=1;$('caption').textContent='';btns([['Skip \u25B6',toGlobe,1]])}
+var pilotShown=false;
+function pilotBanner(){
+  var name;try{name=localStorage.getItem('sonepur_pilot_name');}catch(e){name=null}
+  if(!name||pilotShown)return;pilotShown=true;
+  var b=document.createElement('div');b.textContent='\u2708 Welcome aboard, '+name+' \u2014 your vote is airborne';
+  b.style.cssText='position:fixed;left:50%;top:calc(30% + var(--sat));transform:translate(-50%,0);background:rgba(194,65,12,.88);padding:.6rem 1.1rem;border-radius:8px;font-weight:700;font-size:.85rem;z-index:10;opacity:0;transition:opacity .6s;pointer-events:none;max-width:80vw;text-align:center';
+  document.body.appendChild(b);requestAnimationFrame(function(){b.style.opacity=1});
+  setTimeout(function(){b.style.opacity=0;setTimeout(function(){b.remove()},700)},3600);
+}
+function go(){$('hud').style.display='none';$('card').style.display='none';plane.visible=false;cA.style.display='';cA.style.opacity=1;uiShown=false;resetA();state='takeoff';$('title').style.opacity=1;$('caption').textContent='';btns([['Skip \u25B6',toGlobe,1]]);pilotBanner();}
 function frame(now){var dt=Math.min(.05,(now-last)/1000);last=now;
 if(state==='takeoff'){stepA(dt);if(tA>10.5)toGlobe()}
 else if(state==='rise'){tR+=dt;stepA(dt);stepG(dt);var o=1-Math.min(1,Math.max(0,(tR-.8)/3.8));cA.style.opacity=o*o*(3-2*o);if(tR>8){state='globe';cA.style.display='none'}}
@@ -240,7 +249,7 @@ if(state==='takeoff')renderer.render(sceneA,camA);else if(state==='rise'){rg.ren
 requestAnimationFrame(frame)}
 function resize(){renderer.setSize(innerWidth,innerHeight);rg.setSize(innerWidth,innerHeight);camA.aspect=camG.aspect=innerWidth/innerHeight;camA.updateProjectionMatrix();camG.updateProjectionMatrix()}
 addEventListener('resize',resize);resize();
-if(matchMedia('(prefers-reduced-motion: reduce)').matches){state='globe';tG=9;cA.style.display='none';arcs.forEach(function(a){a.l.geometry.setDrawRange(0,65)});showGlobeUI()}else{resetA();btns([['Skip \u25B6',toGlobe,1]])}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){state='globe';tG=9;cA.style.display='none';arcs.forEach(function(a){a.l.geometry.setDrawRange(0,65)});showGlobeUI()}else{resetA();btns([['Skip \u25B6',toGlobe,1]]);pilotBanner();}
 requestAnimationFrame(frame);
 })();
 </script>

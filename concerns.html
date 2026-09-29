@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concerns &amp; Grievances | Sonepur</title>
+    <meta name="description" content="Report a concern or grievance about the proposed Sonepur airport project — land, compensation, information or environment. Individual reports stay private; only totals are public.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Serif+Devanagari:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">SONEPUR</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="business.html">Business</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li>
+                <li><a href="poll.html">Poll</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="concerns.html" class="active">Concerns</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="updates.html" class="btn-primary">Latest Updates</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <section class="page-header">
+        <h1 class="section-title">Concerns &amp; Grievances</h1>
+        <p>Report a concern about the airport project. / परियोजना से जुड़ी अपनी चिंता दर्ज करें।</p>
+    </section>
+
+    <section class="poll-section">
+        <div class="poll-wrap">
+            <div class="poll-card">
+                <h2 class="poll-question">Report a concern<br><span class="hi">अपनी चिंता दर्ज करें</span></h2>
+                <p class="poll-note">Your name and phone number are optional. Your report is private; only you and the site owner can see it. / आपका नाम और फ़ोन नंबर देना ज़रूरी नहीं है। आपकी रिपोर्ट निजी रहती है।</p>
+
+                <form id="c-form" onsubmit="return false;">
+                    <div class="poll-fields">
+                        <label class="wide">Category / श्रेणी
+                            <select id="c-category" required>
+                                <option value="">Select / चुनें</option>
+                                <option value="land">Land acquisition / भूमि अधिग्रहण</option>
+                                <option value="compensation">Compensation / मुआवज़ा</option>
+                                <option value="information">Lack of information / जानकारी की कमी</option>
+                                <option value="environment">Environment / पर्यावरण</option>
+                                <option value="other">Other / अन्य</option>
+                            </select>
+                        </label>
+                        <label class="wide">Describe your concern / अपनी चिंता बताएं
+                            <textarea id="c-description" rows="4" maxlength="1000" required placeholder="What happened, where, and when? / क्या हुआ, कहाँ और कब?"></textarea>
+                        </label>
+                        <label>Village or area (optional) / गाँव या क्षेत्र
+                            <input type="text" id="c-area" maxlength="150">
+                        </label>
+                        <label>Your name (optional) / आपका नाम
+                            <input type="text" id="c-name" maxlength="100" autocomplete="name">
+                        </label>
+                        <label class="wide">Mobile number (optional, only if you want a follow-up) / मोबाइल नंबर
+                            <input type="tel" id="c-phone" inputmode="numeric" maxlength="14" autocomplete="tel" placeholder="10-digit / 10 अंक">
+                        </label>
+                        <input type="text" id="c-website" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px" aria-hidden="true">
+                    </div>
+                    <button type="button" id="c-submit" class="btn-primary" style="margin-top:1.4rem">Submit report / रिपोर्ट भेजें</button>
+                </form>
+                <p id="c-status" class="poll-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="poll-card poll-results">
+                <h2 class="poll-results-title">Reports so far / अब तक की रिपोर्टें <span class="live-dot">Live / लाइव</span></h2>
+                <div id="c-summary"><p class="poll-note">Loading…</p></div>
+                <p class="result-total" id="c-total"></p>
+            </div>
+
+            <div class="poll-fineprint">
+                <p><strong>How this works / यह कैसे काम करता है.</strong> Only the site owner can read individual reports, used to understand and follow up on issues. The public page shows only how many reports fall in each category, never who submitted them or what they said. / केवल साइट स्वामी व्यक्तिगत रिपोर्ट पढ़ सकता है। सार्वजनिक पृष्ठ पर केवल श्रेणीवार संख्या दिखाई जाती है, किसी का नाम या विवरण नहीं।</p>
+                <p><strong>Not a legal complaint / यह कानूनी शिकायत नहीं है.</strong> This is a community reporting tool, not an official grievance redressal system. For land and compensation matters, also contact the district administration directly. / यह एक सामुदायिक उपकरण है, आधिकारिक शिकायत निवारण प्रणाली नहीं। भूमि और मुआवज़े के मामलों के लिए जिला प्रशासन से भी संपर्क करें।</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content"><div class="footer-brand"><h2>SONEPUR</h2></div></div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+    (function () {
+        var val = function (id) { return document.getElementById(id).value.trim(); };
+        var statusEl = document.getElementById('c-status');
+        function setStatus(msg, kind) { statusEl.textContent = msg || ''; statusEl.className = 'poll-status' + (kind ? ' ' + kind : ''); }
+        var labels = { land: 'Land / भूमि', compensation: 'Compensation / मुआवज़ा', information: 'Information / जानकारी', environment: 'Environment / पर्यावरण', other: 'Other / अन्य' };
+
+        function loadSummary() {
+            fetch('/api/complaints-summary', { cache: 'no-store' })
+                .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+                .then(function (data) {
+                    var box = document.getElementById('c-summary');
+                    box.innerHTML = '';
+                    Object.keys(labels).forEach(function (k) {
+                        var n = data.counts[k] || 0, pct = data.total ? (n / data.total) * 100 : 0;
+                        var row = document.createElement('div'); row.className = 'result-row';
+                        row.innerHTML = '<div class="result-head"><span>' + labels[k] + '</span><span>' + n + '</span></div><div class="bar"><div class="bar-fill yes" style="width:' + pct + '%"></div></div>';
+                        box.appendChild(row);
+                    });
+                    document.getElementById('c-total').innerHTML = '<strong>' + data.total + '</strong> total reports / कुल रिपोर्टें';
+                })
+                .catch(function () { document.getElementById('c-summary').textContent = 'Summary unavailable right now.'; });
+        }
+        loadSummary();
+        setInterval(loadSummary, 20000);
+
+        document.getElementById('c-submit').addEventListener('click', function () {
+            var category = val('c-category'), description = val('c-description');
+            if (!category) { setStatus('Please select a category. / कृपया श्रेणी चुनें।', 'error'); return; }
+            if (description.length < 10) { setStatus('Please describe the concern in a bit more detail. / कृपया अधिक विवरण दें।', 'error'); return; }
+            var phone = val('c-phone');
+            if (phone && !/^[6-9]\d{9}$/.test(phone.replace(/[\s-]/g, ''))) { setStatus('Mobile number should be a valid 10-digit number, or leave it blank. / मान्य 10 अंकों का मोबाइल नंबर दें या खाली छोड़ें।', 'error'); return; }
+
+            var btn = document.getElementById('c-submit'); btn.disabled = true;
+            setStatus('Submitting… / भेजा जा रहा है…');
+            fetch('/api/complaint', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ category: category, description: description, area: val('c-area'), name: val('c-name'), phone: phone, website: val('c-website') })
+            }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+              .then(function (res) {
+                  if (res.ok) {
+                      setStatus('Thank you. Your report has been recorded privately. / धन्यवाद, आपकी रिपोर्ट निजी रूप से दर्ज हो गई।', 'ok');
+                      document.getElementById('c-form').reset();
+                      loadSummary();
+                  } else {
+                      setStatus(res.d.error === 'rate_limited' ? 'Too many reports from this connection. Please try later. / बहुत अधिक प्रयास, बाद में कोशिश करें।' : 'Something went wrong. Please try again. / कुछ गलत हुआ, फिर कोशिश करें।', 'error');
+                  }
+              }).catch(function () { setStatus('Network problem. Please try again. / नेटवर्क समस्या।', 'error'); })
+              .then(function () { btn.disabled = false; });
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -21,7 +21,7 @@
                 <li><a href="explore.html">Explore</a></li>
                 <li><a href="business.html">Business</a></li>
                 <li><a href="opportunities.html">Opportunities</a></li>
-                <li><a href="poll.html">Poll</a></li><li><a href="news.html">News</a></li>
+                <li><a href="poll.html">Poll</a></li><li><a href="news.html">News</a></li><li><a href="concerns.html">Concerns</a></li><li><a href="jobs.html">Jobs Calculator</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="updates.html" class="btn-primary">Latest Updates</a></li>
             </ul>
@@ -73,6 +73,7 @@
             </div>
         </div>
     </section>
+
     <section class="poll-teaser">
         <div class="container text-center">
             <h2 class="section-title">Take Off from Sonepur</h2>
@@ -80,6 +81,7 @@
             <a href="fly.html" class="btn-primary">Launch the flight</a>
         </div>
     </section>
+
     <!-- Public Poll Teaser -->
     <section class="poll-teaser">
         <div class="container text-center">
@@ -90,6 +92,31 @@
             <h2 class="section-title">Have Your Say</h2>
             <p>Should the proposed Sonepur airport be built at Hardiya Chawar? Vote once with your Google account and watch the live results.</p>
             <a href="poll.html" class="btn-primary">Vote in the public poll</a>
+        </div>
+    </section>
+
+    <!-- Countdown -->
+    <section class="poll-teaser" style="background:linear-gradient(135deg, rgba(15,107,116,0.08), rgba(194,65,12,0.08));">
+        <div class="container text-center">
+            <h2 class="section-title">Countdown to a New Sky</h2>
+            <p>Targeted completion, per official reports: before 2030.</p>
+            <div id="countdown" style="display:flex;justify-content:center;gap:1.4rem;flex-wrap:wrap;margin:1.6rem 0;font-family:'Cinzel',serif;">
+                <div><div id="cd-d" style="font-size:2.2rem;font-weight:700;color:var(--primary)">0</div><div>Days</div></div>
+                <div><div id="cd-h" style="font-size:2.2rem;font-weight:700;color:var(--primary)">0</div><div>Hours</div></div>
+                <div><div id="cd-m" style="font-size:2.2rem;font-weight:700;color:var(--primary)">0</div><div>Min</div></div>
+                <div><div id="cd-s" style="font-size:2.2rem;font-weight:700;color:var(--primary)">0</div><div>Sec</div></div>
+            </div>
+            <a href="news.html" class="btn-primary">Read the latest project news</a>
+        </div>
+    </section>
+
+    <!-- Concerns and Jobs teaser -->
+    <section class="container text-center" style="padding:3rem 5%;">
+        <h2 class="section-title">Have a Concern, or Curious About Jobs?</h2>
+        <p style="max-width:640px;margin:0 auto 1.8rem;color:var(--text-light)">Report a land, compensation or information concern privately, or see an illustrative estimate of jobs an airport this size could support.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <a href="concerns.html" class="btn-primary">Report a Concern</a>
+            <a href="jobs.html" class="btn-primary" style="background:#0f6b74;">Try the Jobs Calculator</a>
         </div>
     </section>
 
@@ -113,5 +140,24 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    (function () {
+        var target = new Date('2029-12-31T18:30:00Z').getTime(); // 2029-12-31 midnight IST
+        var d = document.getElementById('cd-d'), h = document.getElementById('cd-h'),
+            m = document.getElementById('cd-m'), s = document.getElementById('cd-s');
+        if (!d) return;
+        function tick() {
+            var diff = target - Date.now();
+            if (diff < 0) diff = 0;
+            var days = Math.floor(diff / 86400000);
+            var hrs = Math.floor(diff / 3600000) % 24;
+            var min = Math.floor(diff / 60000) % 60;
+            var sec = Math.floor(diff / 1000) % 60;
+            d.textContent = days; h.textContent = hrs; m.textContent = min; s.textContent = sec;
+        }
+        tick();
+        setInterval(tick, 1000);
+    })();
+    </script>
 </body>
 </html>

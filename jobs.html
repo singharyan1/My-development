@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs Calculator | Sonepur</title>
+    <meta name="description" content="An illustrative calculator estimating how many jobs a Sonepur airport of a given size could support, based on published airport-industry benchmarks.">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">SONEPUR</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="business.html">Business</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li>
+                <li><a href="poll.html">Poll</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="concerns.html">Concerns</a></li>
+                <li><a href="jobs.html" class="active">Jobs Calculator</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="updates.html" class="btn-primary">Latest Updates</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <section class="page-header">
+        <h1 class="section-title">Jobs Calculator</h1>
+        <p>An illustrative estimate, not an official forecast.</p>
+    </section>
+
+    <section class="poll-section">
+        <div class="poll-wrap">
+            <div class="poll-card">
+                <h2 class="poll-question">How many jobs could Sonepur airport support?</h2>
+                <p class="poll-note">Move the slider to a yearly passenger volume and see a rough estimate, based on figures airport industry bodies publish for airports generally. No traffic forecast for Sonepur has been announced, so treat this as a "what if", not a prediction.</p>
+
+                <label style="display:block;margin-top:1.6rem;font-weight:700">
+                    Passengers per year: <span id="mppa-val">1.0</span> million
+                    <input type="range" id="mppa" min="0.2" max="10" step="0.1" value="1" style="width:100%;margin-top:.6rem">
+                </label>
+
+                <div class="vchart" style="margin-top:2rem">
+                    <div class="vcol"><div class="vval"><b id="j-direct">0</b><span>Direct</span></div><div class="vtrack"><div class="vfill yes" id="bar-direct"></div></div><div class="vlabel">Airport &amp; airline jobs</div></div>
+                    <div class="vcol"><div class="vval"><b id="j-indirect">0</b><span>Indirect</span></div><div class="vtrack"><div class="vfill no" id="bar-indirect"></div></div><div class="vlabel">Suppliers &amp; contractors</div></div>
+                    <div class="vcol"><div class="vval"><b id="j-induced">0</b><span>Induced</span></div><div class="vtrack"><div class="vfill" id="bar-induced" style="background:#a3792f"></div></div><div class="vlabel">Local spending</div></div>
+                </div>
+                <p class="result-total" style="text-align:center;margin-top:1.6rem">Estimated total: <strong id="j-total">0</strong> jobs supported</p>
+            </div>
+
+            <div class="poll-fineprint">
+                <p><strong>Method.</strong> This uses a commonly cited airport-industry rule of thumb of roughly 1,000 total jobs (direct, indirect and induced combined) per one million passengers handled per year, split here as about 40% direct, 35% indirect and 25% induced. Real outcomes vary widely by airport size, cargo volume, and how much industry grows around it.</p>
+                <p><strong>Not a forecast for Sonepur.</strong> No passenger traffic projection for the proposed Sonepur airport has been published. This tool is for exploring "what if" scenarios only, and should not be quoted as an official jobs estimate.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content"><div class="footer-brand"><h2>SONEPUR</h2></div></div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+    (function () {
+        var slider = document.getElementById('mppa');
+        function render() {
+            var m = parseFloat(slider.value);
+            document.getElementById('mppa-val').textContent = m.toFixed(1);
+            var total = Math.round(m * 1000);
+            var direct = Math.round(total * 0.40), indirect = Math.round(total * 0.35), induced = total - direct - indirect;
+            var max = Math.round(10 * 1000 * 0.40);
+            document.getElementById('j-direct').textContent = direct.toLocaleString('en-IN');
+            document.getElementById('j-indirect').textContent = indirect.toLocaleString('en-IN');
+            document.getElementById('j-induced').textContent = induced.toLocaleString('en-IN');
+            document.getElementById('j-total').textContent = total.toLocaleString('en-IN');
+            document.getElementById('bar-direct').style.height = (direct / max * 100) + '%';
+            document.getElementById('bar-indirect').style.height = (indirect / max * 100) + '%';
+            document.getElementById('bar-induced').style.height = (induced / max * 100) + '%';
+        }
+        slider.addEventListener('input', render);
+        render();
+    })();
+    </script>
+</body>
+</html>
