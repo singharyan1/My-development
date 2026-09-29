@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore Sonepur | The Eternal Heritage</title>
+    <meta name="description" content="Explore Sonepur: the Harihar Nath temple, the Gandak-Ganga confluence, the historic Sonepur Mela cattle fair, and nearby Vaishali.">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -25,15 +26,78 @@
 
     <section class="page-header">
         <h1 class="section-title">Explore Sonepur</h1>
-        <p>Discover the temples, traditions, and culture that make Sonepur a spiritual epicenter.</p>
+        <p>Discover the temples, traditions and culture that make Sonepur a spiritual epicentre.</p>
     </section>
 
-    <section class="page-content">
-        <div class="content-box">
-            <h2>The Confluence & Harihar Nath</h2>
-            <p>Sonepur is famous for the convergence of the Gandaki and Ganges rivers, creating a deeply sacred environment. Pilgrims visit the Harihar Nath temple to offer their respects to the intertwined deities of Vishnu and Shiva.</p>
-            <br>
-            <p>More detailed guides and virtual tours will be added here soon.</p>
+    <section class="explore-section">
+        <div class="explore-tabs" role="tablist">
+            <button class="explore-tab active" data-tab="confluence" role="tab" aria-selected="true">Harihar Nath &amp; the Confluence</button>
+            <button class="explore-tab" data-tab="mela" role="tab" aria-selected="false">Sonepur Mela</button>
+            <button class="explore-tab" data-tab="vaishali" role="tab" aria-selected="false">Nearby Vaishali</button>
+            <button class="explore-tab" data-tab="visit" role="tab" aria-selected="false">Plan Your Visit</button>
+        </div>
+
+        <div class="explore-panel active" id="panel-confluence">
+            <div class="explore-grid">
+                <img src="assets/images/harihar_nath_1777197563968.png" alt="Harihar Nath Temple, Sonepur" class="explore-img">
+                <div>
+                    <h2>Harihar Nath Temple</h2>
+                    <p>Sonepur sits where the Gandak river meets the Ganges, a confluence held sacred for centuries. The Harihar Nath temple here honours a single deity representing both Vishnu ("Hari") and Shiva ("Har"), a rare combined form that draws pilgrims from across Bihar and beyond.</p>
+                    <p>The ghats along the confluence are busiest at sunrise, when boats carry pilgrims out for a ritual bath at the meeting point of the two rivers.</p>
+                    <ul class="explore-facts">
+                        <li><strong>Best time:</strong> Early morning, and around Kartik Purnima (Oct/Nov)</li>
+                        <li><strong>Nearby:</strong> Sonepur ghat, the Gandak barrage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="explore-panel" id="panel-mela">
+            <div class="explore-grid">
+                <img src="assets/images/sonepur_mela_1777197547469.png" alt="Sonepur Mela cattle fair" class="explore-img">
+                <div>
+                    <h2>Sonepur Mela</h2>
+                    <p>Held every year around Kartik Purnima, Sonepur Mela is one of Asia's oldest and largest cattle fairs, historically a month-long gathering where traders brought elephants, horses, cattle and camels from across the region. Today it combines livestock trading with a large mela ground of stalls, handicrafts, folk performances and a circus.</p>
+                    <p>It remains one of the biggest annual boosts to the local economy, drawing traders and visitors from well beyond Bihar.</p>
+                    <ul class="explore-facts">
+                        <li><strong>When:</strong> Around Kartik Purnima, usually November</li>
+                        <li><strong>Where:</strong> On the banks of the Gandak, adjoining the Harihar Nath temple grounds</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="explore-panel" id="panel-vaishali">
+            <div class="explore-grid">
+                <img src="assets/images/landscape.png" alt="Countryside near Sonepur and Vaishali" class="explore-img">
+                <div>
+                    <h2>Vaishali</h2>
+                    <p>About 35 km from Sonepur lies Vaishali, one of the earliest known republics in recorded history and a major Buddhist pilgrimage site. Gautam Buddha delivered his last sermon here, and the ancient Ashoka Pillar, topped with a lion capital, still stands at the site.</p>
+                    <p>Vaishali is a natural add-on to a Sonepur visit, and a proposed airport would put both places within easy reach for pilgrims and history travellers arriving from further afield.</p>
+                    <ul class="explore-facts">
+                        <li><strong>Distance from Sonepur:</strong> About 35 km</li>
+                        <li><strong>Highlights:</strong> Ashoka Pillar, Relic Stupa, Vaishali Museum</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="explore-panel" id="panel-visit">
+            <div class="explore-grid">
+                <div>
+                    <h2>Getting There</h2>
+                    <p>Sonepur lies just across the Gandak from Hajipur, on NH-19, and is about 25 km from Patna. The Sonepur&ndash;Chhapra stretch of NH-19 connects it directly to the region's main highway network.</p>
+                    <ul class="explore-facts">
+                        <li><strong>From Patna:</strong> ~25 km, roughly 45 minutes by road</li>
+                        <li><strong>Nearest railway station:</strong> Sonepur Junction, a major hub on the Northeast Frontier Railway</li>
+                        <li><strong>Nearest airport today:</strong> Patna (Jay Prakash Narayan International Airport)</li>
+                    </ul>
+                    <p style="margin-top:1rem">Once the proposed Sonepur airport is built, these same routes would connect visitors straight from the runway to the ghats, the Mela grounds and on to Vaishali.</p>
+                </div>
+                <div class="explore-map">
+                    <iframe title="Map of Harihar Nath Temple, Sonepur" loading="lazy" style="border:0;width:100%;height:100%;border-radius:12px" src="https://www.google.com/maps?q=Harihar+Nath+Temple+Sonepur+Bihar&output=embed"></iframe>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -46,5 +110,18 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+    (function () {
+        var tabs = document.querySelectorAll('.explore-tab');
+        tabs.forEach(function (t) {
+            t.addEventListener('click', function () {
+                tabs.forEach(function (o) { o.classList.remove('active'); o.setAttribute('aria-selected', 'false'); });
+                document.querySelectorAll('.explore-panel').forEach(function (p) { p.classList.remove('active'); });
+                t.classList.add('active'); t.setAttribute('aria-selected', 'true');
+                document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
