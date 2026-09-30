@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Airport Planning Map | Sonepur</title>
+<meta name="description" content="Interactive map of the Special Area and Core Area proposed around the Sonepur airport, with roads, boundaries and key landmarks.">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.map-wrap{position:relative;max-width:1100px;margin:0 auto;padding:0 5% 4rem}
+.map-stage{position:relative;background:#eef3e8;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08);touch-action:none;height:min(78vh,640px)}
+.map-stage svg{display:block;width:100%;height:100%}
+.map-controls{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:6px;z-index:5}
+.map-controls button{width:38px;height:38px;border-radius:8px;border:0;background:rgba(255,255,255,.95);font-size:1.1rem;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.15);cursor:pointer;color:var(--text-main)}
+.map-legend{position:absolute;left:10px;top:10px;background:rgba(255,255,255,.95);border-radius:10px;padding:.6rem .8rem;font-size:.78rem;max-width:150px;box-shadow:0 2px 8px rgba(0,0,0,.12);z-index:5}
+.map-legend label{display:flex;align-items:center;gap:.4rem;margin:.3rem 0;cursor:pointer;font-weight:600}
+.map-legend input{margin:0}
+.map-legend .sw{width:16px;height:4px;display:inline-block;border-radius:2px;flex:0 0 auto}
+.map-hint{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:.72rem;padding:.35rem .6rem;border-radius:6px;z-index:5}
+.map-card{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:16px 16px 0 0;padding:1.2rem 1.3rem calc(1.2rem + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 30px rgba(0,0,0,.18);transform:translateY(110%);transition:transform .3s ease;z-index:20;max-height:60vh;overflow:auto}
+.map-card.open{transform:translateY(0)}
+.map-card h3{margin:0 0 .5rem;font-family:'Cinzel',serif;color:var(--primary)}
+.map-card table{width:100%;border-collapse:collapse;margin-top:.6rem;font-size:.85rem}
+.map-card td{padding:.35rem 0;border-top:1px solid #eee}
+.map-card td:first-child{color:var(--text-light)}
+.map-card .close{position:absolute;top:10px;right:14px;background:none;border:0;font-size:1.4rem;cursor:pointer;color:var(--text-light)}
+.map-pin{cursor:pointer}
+.map-pin circle{transition:r .15s}
+.map-pin:active circle,.map-pin:hover circle{r:9}
+@media (min-width:820px){.map-card{left:auto;right:24px;bottom:24px;width:340px;border-radius:14px}}
+</style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">SONEPUR</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="map.html" class="active">Map</a></li>
+                <li><a href="business.html">Business</a></li>
+                <li><a href="opportunities.html">Opportunities</a></li><li><a href="poll.html">Poll</a></li><li><a href="news.html">News</a></li><li><a href="concerns.html">Concerns</a></li><li><a href="jobs.html">Jobs Calculator</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="updates.html" class="btn-primary">Latest Updates</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </header>
+
+    <section class="page-header">
+        <h1 class="section-title">Airport Planning Map</h1>
+        <p>The proposed Special Area, Core Area, and the roads connecting them.</p>
+    </section>
+
+    <section class="map-wrap">
+        <div class="map-stage" id="stage">
+            <div class="map-legend" id="legend">
+                <div><span class="sw" style="background:#16a34a"></span> Municipal Corp.</div>
+                <label><input type="checkbox" data-l="planning" checked><span class="sw" style="background:#0ea5e9"></span> Planning Area</label>
+                <label><input type="checkbox" data-l="special" checked><span class="sw" style="background:#d946ef"></span> Special Area</label>
+                <label><input type="checkbox" data-l="core" checked><span class="sw" style="background:#dc2626"></span> Core Area</label>
+                <label><input type="checkbox" data-l="roads" checked><span class="sw" style="background:#f59e0b"></span> Highways</label>
+                <label><input type="checkbox" data-l="newroads" checked><span class="sw" style="background:#2563eb"></span> New Roads</label>
+                <label><input type="checkbox" data-l="pins" checked><span class="sw" style="background:#7c2d12"></span> Landmarks</label>
+            </div>
+            <div class="map-controls">
+                <button id="zin" aria-label="Zoom in">+</button>
+                <button id="zout" aria-label="Zoom out">&minus;</button>
+                <button id="zreset" aria-label="Reset view" style="font-size:.65rem">Reset</button>
+            </div>
+            <div class="map-hint">Drag to pan &middot; pinch or scroll to zoom &middot; tap a marker</div>
+            <svg id="svg" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+                <g id="world">
+                <!-- rivers -->
+                <path d="M0,470 C220,430 380,500 520,460 C680,415 820,460 1000,430 L1000,560 C820,590 680,545 520,585 C380,620 220,555 0,590 Z" fill="#8fc1e0" opacity=".55"/>
+                <text x="60" y="560" font-size="14" fill="#2b6ea5" font-weight="700">GANGA</text>
+                <path d="M540,0 C560,90 500,180 540,270 C575,345 545,400 560,460 L640,450 C625,390 655,340 615,265 C580,190 630,90 615,0 Z" fill="#8fc1e0" opacity=".55"/>
+                <text x="600" y="140" font-size="13" fill="#2b6ea5" font-weight="700" transform="rotate(90 600 140)">GANDAK</text>
+
+                <!-- Municipal Corporation (approx small area near Sonepur town) -->
+                <path d="M470,330 L560,320 L580,380 L540,410 L480,395 Z" fill="none" stroke="#16a34a" stroke-width="3"/>
+
+                <!-- Planning Area -->
+                <g class="layer" data-l="planning">
+                <path d="M390,260 L640,240 L690,420 L610,470 L430,450 Z" fill="none" stroke="#0ea5e9" stroke-width="3" stroke-dasharray="2 4"/>
+                </g>
+
+                <!-- Special Area (33,000 acres) -->
+                <g class="layer" data-l="special">
+                <path id="specialArea" d="M340,150 C430,110 560,100 660,140 C740,175 780,240 760,300 C800,330 800,380 750,410 C700,450 600,470 500,460 C400,450 320,410 300,340 C280,270 280,190 340,150 Z" fill="#d946ef" fill-opacity=".14" stroke="#d946ef" stroke-width="4"/>
+                </g>
+
+                <!-- Core Area (2,000 acres, near proposed airport) -->
+                <g class="layer" data-l="core">
+                <path id="coreArea" d="M540,230 L640,215 L665,290 L610,325 L545,300 Z" fill="#dc2626" fill-opacity=".22" stroke="#dc2626" stroke-width="3.5"/>
+                </g>
+
+                <!-- existing highways -->
+                <g class="layer" data-l="roads">
+                <path d="M60,300 L940,340" stroke="#f59e0b" stroke-width="5" stroke-dasharray="10 6"/>
+                <text x="70" y="292" font-size="12" fill="#92400e" font-weight="700">NH31 &middot; Hajipur&ndash;Chhapra Hwy</text>
+                <path d="M420,470 L680,610" stroke="#f59e0b" stroke-width="5" stroke-dasharray="10 6"/>
+                <text x="430" y="500" font-size="11" fill="#92400e" font-weight="700">Chapra Patna Hwy (NH31)</text>
+                <path d="M660,170 L900,310" stroke="#f59e0b" stroke-width="5" stroke-dasharray="10 6"/>
+                <text x="700" y="200" font-size="11" fill="#92400e" font-weight="700">Sonepur&ndash;Dariyara Road</text>
+                <path d="M330,180 L120,420" stroke="#f59e0b" stroke-width="5" stroke-dasharray="10 6"/>
+                <text x="150" y="260" font-size="11" fill="#92400e" font-weight="700" transform="rotate(-52 150 260)">Patna&ndash;Parsa Hwy (SH73)</text>
+                <path d="M300,120 L620,90" stroke="#f59e0b" stroke-width="5" stroke-dasharray="10 6"/>
+                <text x="330" y="95" font-size="11" fill="#92400e" font-weight="700">Parsauna Maran Road</text>
+                </g>
+
+                <!-- new greenfield roads (from cabinet documents) -->
+                <g class="layer" data-l="newroads">
+                <path d="M620,270 C420,330 160,400 40,520" stroke="#2563eb" stroke-width="4" stroke-dasharray="4 5" fill="none"/>
+                <text x="120" y="470" font-size="11" fill="#1e3a8a" font-weight="700" transform="rotate(24 120 470)">Darihara&ndash;Dumaria Ghat (73.5 km, proposed)</text>
+                <path d="M330,120 C420,260 460,380 500,600" stroke="#2563eb" stroke-width="4" stroke-dasharray="4 5" fill="none"/>
+                <text x="440" y="330" font-size="11" fill="#1e3a8a" font-weight="700" transform="rotate(75 440 330)">Bidupur&ndash;Dighwara N. Ganga Path (56 km, proposed)</text>
+                </g>
+
+                <!-- landmark pins -->
+                <g class="layer" data-l="pins">
+                <g class="map-pin" data-k="airport"><circle cx="595" cy="262" r="7" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="605" y="258" font-size="12" font-weight="700" fill="#7f1d1d">Proposed Airport</text></g>
+                <g class="map-pin" data-k="darihara"><circle cx="620" cy="270" r="6" fill="#7c2d12" stroke="#fff" stroke-width="2"/><text x="630" y="288" font-size="11" font-weight="700" fill="#7c2d12">Darihara (Konhua)</text></g>
+                <g class="map-pin" data-k="station"><circle cx="480" cy="400" r="6" fill="#7c2d12" stroke="#fff" stroke-width="2"/><text x="440" y="422" font-size="11" font-weight="700" fill="#7c2d12">Sonepur Station</text></g>
+                <g class="map-pin" data-k="temple"><circle cx="440" cy="450" r="6" fill="#7c2d12" stroke="#fff" stroke-width="2"/><text x="360" y="472" font-size="11" font-weight="700" fill="#7c2d12">Harihar Nath Temple</text></g>
+                <g class="map-pin" data-k="bridge"><circle cx="330" cy="470" r="6" fill="#7c2d12" stroke="#fff" stroke-width="2"/><text x="200" y="490" font-size="11" font-weight="700" fill="#7c2d12">Digha&ndash;Sonepur Bridge / JP Setu</text></g>
+                <g class="map-pin" data-k="ring"><circle cx="230" cy="520" r="6" fill="#7c2d12" stroke="#fff" stroke-width="2"/><text x="120" y="545" font-size="11" font-weight="700" fill="#7c2d12">Patna Ring Road</text></g>
+                <g class="map-pin" data-k="bela"><circle cx="360" cy="330" r="6" fill="#7c2d12" stroke="#fff" stroke-width="2"/><text x="230" y="325" font-size="11" font-weight="700" fill="#7c2d12">Bela Wheel Factory</text></g>
+                <g class="map-pin" data-k="patna"><circle cx="150" cy="580" r="7" fill="#1f2937" stroke="#fff" stroke-width="2"/><text x="100" y="605" font-size="13" font-weight="700" fill="#1f2937">PATNA</text></g>
+                <g class="map-pin" data-k="hajipur"><circle cx="330" cy="320" r="6" fill="#1f2937" stroke="#fff" stroke-width="2"/><text x="280" y="305" font-size="12" font-weight="700" fill="#1f2937">HAJIPUR</text></g>
+                <g class="map-pin" data-k="chapra"><circle cx="90" cy="290" r="6" fill="#1f2937" stroke="#fff" stroke-width="2"/><text x="30" y="275" font-size="12" font-weight="700" fill="#1f2937">CHHAPRA</text></g>
+                <g class="map-pin" data-k="dighwara"><circle cx="680" cy="610" r="6" fill="#1f2937" stroke="#fff" stroke-width="2"/><text x="640" y="632" font-size="11" font-weight="700" fill="#1f2937">DIGHWARA</text></g>
+                <g class="map-pin" data-k="bidupur"><circle cx="600" cy="95" r="6" fill="#1f2937" stroke="#fff" stroke-width="2"/><text x="560" y="80" font-size="11" font-weight="700" fill="#1f2937">BIDUPUR</text></g>
+                <g class="map-pin" data-k="gopalganj"><circle cx="40" cy="520" r="6" fill="#1f2937" stroke="#fff" stroke-width="2"/><text x="-30" y="540" font-size="11" font-weight="700" fill="#1f2937">GOPALGANJ &rarr;</text></g>
+                </g>
+                </g>
+            </svg>
+        </div>
+
+        <p style="text-align:center;font-size:.85rem;color:var(--text-light);margin-top:1rem">Illustrative schematic based on the district planning department's Special Area / Core Area map and public project documents. Not to exact scale or GPS-accurate.</p>
+
+        <div class="poll-fineprint" style="margin-top:1rem">
+            <p><strong>What this shows.</strong> The Special Area (about 33,000 acres) is the wider zone proposed for planned development around the airport. Inside it, the Core Area (about 2,000 acres) is the priority zone nearest the airport itself. The new roads shown in blue are separate highway proposals before the Bihar Cabinet, meant to improve access to the site.</p>
+        </div>
+    </section>
+
+    <div class="map-card" id="card">
+        <button class="close" id="cardClose" aria-label="Close">&times;</button>
+        <div id="cardBody"></div>
+    </div>
+
+    <footer>
+        <div class="container footer-content"><div class="footer-brand"><h2>SONEPUR</h2></div></div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+    (function () {
+        var stage = document.getElementById('stage'), world = document.getElementById('world');
+        var scale = 1, tx = 0, ty = 0, drag = null, pinchStart = null;
+        function apply() { world.setAttribute('transform', 'translate(' + tx + ',' + ty + ') scale(' + scale + ')'); }
+        function clampZoom() { scale = Math.min(4, Math.max(0.7, scale)); }
+        stage.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            scale *= e.deltaY < 0 ? 1.12 : 0.9; clampZoom(); apply();
+        }, { passive: false });
+        stage.addEventListener('pointerdown', function (e) {
+            if (e.target.closest('.map-pin') || e.target.closest('.map-legend') || e.target.closest('.map-controls')) return;
+            drag = { x: e.clientX, y: e.clientY, tx: tx, ty: ty };
+            stage.setPointerCapture(e.pointerId);
+        });
+        stage.addEventListener('pointermove', function (e) {
+            if (!drag) return;
+            tx = drag.tx + (e.clientX - drag.x); ty = drag.ty + (e.clientY - drag.y); apply();
+        });
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { stage.addEventListener(ev, function () { drag = null; }); });
+        document.getElementById('zin').onclick = function () { scale *= 1.25; clampZoom(); apply(); };
+        document.getElementById('zout').onclick = function () { scale *= 0.8; clampZoom(); apply(); };
+        document.getElementById('zreset').onclick = function () { scale = 1; tx = 0; ty = 0; apply(); };
+
+        document.querySelectorAll('#legend input').forEach(function (cb) {
+            cb.addEventListener('change', function () {
+                document.querySelectorAll('.layer[data-l="' + cb.dataset.l + '"]').forEach(function (g) {
+                    g.style.display = cb.checked ? '' : 'none';
+                });
+            });
+        });
+
+        var info = {
+            airport: { t: 'Proposed Sonepur Airport', h: '<p>The proposed greenfield airport site, at the centre of the Core Area.</p><table><tr><td>Distance from Sonepur Station</td><td>~6 km</td></tr><tr><td>Distance from CBD</td><td>~6 km</td></tr></table>' },
+            darihara: { t: 'Darihara (Konhua)', h: '<p>The village area named in official planning and highway documents as closest to the proposed runway.</p>' },
+            station: { t: 'Sonepur Station', h: '<p>A major junction on the Northeast Frontier Railway, about 6 km from the proposed Core Area.</p>' },
+            temple: { t: 'Harihar Nath Temple', h: '<p>The temple at the Gandak&ndash;Ganga confluence, Sonepur\u2019s spiritual centre. See the <a href="explore.html">Explore page</a>.</p>' },
+            bridge: { t: 'Digha-Sonepur Bridge / JP Setu', h: '<p>A key existing river crossing connecting Patna to the Hajipur&ndash;Sonepur side.</p>' },
+            ring: { t: 'Patna Ring Road', h: '<p>Part of the road network cited in official documents as connecting Patna to the proposed Special Area.</p>' },
+            bela: { t: 'Bela Wheel Factory', h: '<p>An existing industrial landmark near Hajipur, cited in the Special Area selection criteria.</p>' },
+            patna: { t: 'Patna', h: '<p>State capital, roughly 25 km from Sonepur.</p>' },
+            hajipur: { t: 'Hajipur', h: '<p>Across the Gandak from Sonepur, on NH-19/NH31.</p>' },
+            chapra: { t: 'Chhapra (Saran HQ)', h: '<p>District headquarters of Saran, connected via NH31.</p>' },
+            dighwara: { t: 'Dighwara', h: '<p>Proposed southern end of the Bidupur&ndash;Dighwara North Ganga Path, a new ~56 km highway before the Cabinet.</p>' },
+            bidupur: { t: 'Bidupur', h: '<p>Proposed northern end of the North Ganga Path, near Vaishali district.</p>' },
+            gopalganj: { t: 'Gopalganj district', h: '<p>Home to Dumaria Ghat, the far end of the proposed 73.5 km Darihara&ndash;Dumaria Ghat greenfield highway.</p>' },
+            special: {
+                t: 'Special Area &middot; ~33,000 acres', h: '<p>The wider zone identified for planned development around the airport.</p>' +
+                    '<table><tr><td>North</td><td>Parsauna Maran Road</td></tr><tr><td>South</td><td>Chapra Patna Highway (NH31)</td></tr><tr><td>East</td><td>Sonepur Dariyara Road</td></tr><tr><td>West</td><td>Patna Parsa Highway (SH73)</td></tr></table>'
+            },
+            core: {
+                t: 'Core Area &middot; ~2,000 acres', h: '<p>The priority development zone nearest the airport.</p>' +
+                    '<table><tr><td>Distance from main city boundary</td><td>~5 km</td></tr><tr><td>Distance from CBD</td><td>~6 km</td></tr><tr><td>Distance from Sonepur Station</td><td>~6 km</td></tr><tr><td>Distance from proposed airport</td><td>~1 km</td></tr></table>'
+            }
+        };
+        var card = document.getElementById('card'), body = document.getElementById('cardBody');
+        function open(key) {
+            var d = info[key]; if (!d) return;
+            body.innerHTML = '<h3>' + d.t + '</h3>' + d.h;
+            card.classList.add('open');
+        }
+        document.querySelectorAll('.map-pin').forEach(function (p) {
+            p.addEventListener('click', function (e) { e.stopPropagation(); open(p.dataset.k); });
+        });
+        document.getElementById('specialArea').addEventListener('click', function () { open('special'); });
+        document.getElementById('coreArea').addEventListener('click', function (e) { e.stopPropagation(); open('core'); });
+        document.getElementById('cardClose').onclick = function () { card.classList.remove('open'); };
+    })();
+    </script>
+</body>
+</html>

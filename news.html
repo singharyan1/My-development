@@ -14,7 +14,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="explore.html">Explore</a></li>
+                <li><a href="explore.html">Explore</a></li><li><a href="map.html">Map</a></li>
                 <li><a href="business.html">Business</a></li>
                 <li><a href="opportunities.html">Opportunities</a></li>
                 <li><a href="poll.html" >Poll</a></li>
@@ -47,9 +47,9 @@
             var b = document.createElement('div'); b.className = 'update-content';
             var t = document.createElement('h3'); t.textContent = n.title;
             var p = document.createElement('p'); p.textContent = n.summary;
-            var a = document.createElement('a'); a.href = n.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-            a.className = 'btn-primary'; a.style.cssText = 'display:inline-block;padding:.4rem 1rem;font-size:.8rem;margin-top:1rem'; a.textContent = 'Read at ' + n.source;
-            b.append(t, p, a); c.append(d, b); box.appendChild(c);
+            var src = document.createElement('p'); src.style.cssText = 'font-size:.8rem;color:var(--text-light);margin-top:.8rem';
+            src.textContent = 'Source: ' + n.source;
+            b.append(t, p, src); c.append(d, b); box.appendChild(c);
         });
     }).catch(function () { document.getElementById('news-list').textContent = 'News could not be loaded. Please refresh.'; });
     </script>
